@@ -5,36 +5,60 @@
 import tkinter as tk
 from tkinter import ttk
 
-def button_func():
-    print('a button was pressed')
-    
-def say_hello():
-    print('hello')
-
 # create a window
 window = tk.Tk()
 window.title('Windows and Widgets')
-window.geometry('700x500')
+# window.iconbitmap('example.iso')
 
-# ttk label
-label = ttk.Label(master = window, text = 'this is a test')
+# window.minsize(200, 100)
+# window.maxsize(700, 600)
+# window.resizeable(False, False)
+
+# start window in the middle of the screen
+window_width = 1400
+window_height = 600
+display_width = window.winfo_screenwidth()
+display_height = window.winfo_screenheight()
+
+left = int(display_width / 2 - window_width / 2)
+top = int(display_height / 2 - window_height / 2)
+window.geometry(f'{window_width}x{window_height}+{left}+{top}')
+
+# tkinter variable
+# widgets can be connected by assigning the same value to multiple widgets
+string_var = tk.StringVar()
+
+# change the value of a var
+string_var.set('button pressed')
+
+# label widget
+label = ttk.Label(master = window, text = 'this is a label')
 label.pack()
 
-# tk.text
-text = tk.Text(master = window)
-text.pack()
-
-# ttk entry
-entry = ttk.Entry(master = window)
+# entry widget
+entry = ttk.Entry(window, textvariable = string_var)
 entry.pack()
 
-# label
-label = ttk.Label(master = window, text = 'my label')
-label.pack()
+# text widget
+text = tk.Text(window)
+text.pack()
 
-# button
-button_test = ttk.Button(master = window, text = 'exercise button', command = lambda: print('hello'))
+# button widget
+button_test = ttk.Button(window, text = 'exercise button', command = lambda: print('hello'))
 button_test.pack()
+
+# all config options a widget has
+print(label.configure()) 
+
+# get the entry of a widget
+entry_text = entry.get()
+
+# widgets can be updated with config
+label['text'] = entry_text
+entry['state'] = 'disabled'
+
+# events are binded to widgets
+window.bind('<Alt-KeyPress-a>', lambda event: print('an event'))
 
 # run
 window.mainloop()
